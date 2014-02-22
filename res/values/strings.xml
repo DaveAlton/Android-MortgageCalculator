@@ -4,16 +4,22 @@
     <string name="app_name">TipCalculator</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="billTotal">Bill Total</string>
-    <string name="tenTextView">10%</string>
-    <string name="fifteenTextView">15%</string>
-    <string name="twentyTextView">20%</string>
+    <string name="billTotal">Price</string>
+    <string name="tenTextView">10yrs</string>
+    <string name="fifteenTextView">15yrs</string>
+    <string name="twentyTextView">20yrs</string>
     <string name="blank"/>
-    <string name="tipTextView">Tip</string>
+    <string name="tipTextView">Min Mon Payment</string>
     <string name="totalTextView">Total</string>
     <string name="customTextView">Custom</string>
-    <string name="customTipTextView">0%</string>
-    <string name="tipCustomTextView">Tip</string>
-    <string name="totalCustomTextView">Total</string>
+    <string name="customTipTextView">0yrs</string>
+    <string name="tipCustomTextView">Min Mon Payment</string>
+    <string name="totalCustomTextView">Loan</string>
+    <string name="billTextView">Price</string>
+    <string name="downPaymentTextView">Down Payment</string>
+    <string name="interestRateTextView">Rate</string>
+    <string name="purchasePrice">0</string>
+    <string name="interestRate">0</string>
+    <string name="downPayment">0</string>
 
 </resources>
