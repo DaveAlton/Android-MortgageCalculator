@@ -128,7 +128,8 @@
 		    android:layout_height="wrap_content"
 		    android:layout_span="2"
 		    android:layout_weight="1"
-		    android:max="30"
+		    android:max="29"
+		    android:progress="17"
 		    android:inputType="numberDecimal" />
 		<TextView
 		    android:id="@+id/customTipTextView"

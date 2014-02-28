@@ -15,12 +15,13 @@ import android.widget.TextView;
 import android.app.Activity;
 import android.view.Menu;
 
+@SuppressLint("CutPasteId")
 public class MainActivity extends Activity {
 
 	private static final String LOAN_TOTAL = "Loan_TOTAL";
 	private static final String CUSTOM_TERM = "CUSTOM_PERCENT";
 	private double currentLoanTotal; // Loan amount entered by the user
-	private int currentCustomPercent; // monthPay % set with the SeekBar
+	private int currentCustomTerm; // monthPay % set with the SeekBar
 	private EditText monthPay10EditText; // displays 10% monthPay
 	private EditText total10EditText; // displays total with 10% monthPay
 	private EditText monthPay15EditText; // displays 15% monthPay
@@ -28,12 +29,14 @@ public class MainActivity extends Activity {
 	private EditText purchasePriceEditText; // accepts user input for Loan total
 	private EditText monthPay20EditText; // displays 20% monthPay
 	private EditText total20EditText; // displays total with 20% monthPay
-	private TextView custommonthPayTextView; // displays custom monthPay percentage
+	private TextView customTerm; // displays custom monthPay percentage
 	private EditText monthPayCustomEditText; // displays custom monthPay amount
 	private EditText totalCustomEditText; // displays total with custom monthPay
 	private SeekBar customSeekBar; // used to generate custom monthPay percentage
 	private EditText downPaymentEditText;
+	private EditText customTotal;
 	private EditText interestRateEditText;
+	private EditText customMonthPay;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,14 +46,14 @@ public class MainActivity extends Activity {
 		if (savedInstanceState == null) // the app just started running
 		{
 			currentLoanTotal = 0.0; // initialize the Loan amount to zero
-			currentCustomPercent = 18; // initialize the custom monthPay to 18%
+			currentCustomTerm = 18; // initialize the custom monthPay to 18%
 		} // end if
 		else // app is being restored from memory, not executed from scratch
 		{
 			// initialize the Loan amount to saved amount
 			currentLoanTotal = savedInstanceState.getDouble(LOAN_TOTAL);
 			// initialize the custom monthPay to saved monthPay percent
-			currentCustomPercent = savedInstanceState.getInt(CUSTOM_TERM);
+			currentCustomTerm = savedInstanceState.getInt(CUSTOM_TERM);
 		} // end else
 		// get references to the 10%, 15% and 20% monthPay and total EditTexts
 		downPaymentEditText = (EditText) findViewById(R.id.downPaymentEditText);
@@ -61,8 +64,9 @@ public class MainActivity extends Activity {
 		total15EditText = (EditText) findViewById(R.id.total15EditText);
 		monthPay20EditText = (EditText) findViewById(R.id.tip20EditText);
 		total20EditText = (EditText) findViewById(R.id.total20EditText);
-		// get the TextView displaying the custom monthPay percentage
-		custommonthPayTextView = (TextView) findViewById(R.id.customTipTextView);
+		customMonthPay = (EditText) findViewById(R.id.tipCustomEditText);
+		customTerm = (TextView) findViewById(R.id.customTipTextView);
+		customTotal = (EditText) findViewById(R.id.totalCustomEditText);
 		// get the custom monthPay and total EditTexts
 		monthPayCustomEditText = (EditText) findViewById(R.id.tipCustomEditText);
 		totalCustomEditText = (EditText) findViewById(R.id.totalCustomEditText);
@@ -146,9 +150,9 @@ public class MainActivity extends Activity {
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 			// sets currentCustomPercent to position of the SeekBar's thumb
-			currentCustomPercent = seekBar.getProgress();
+			currentCustomTerm = seekBar.getProgress()+1;
 			updateCustom(); // update EditTexts for custom monthPay and total
-			} // end method onProgressChanged
+		} // end method onProgressChanged
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
 			} // end method onStartTrackingTouch
@@ -163,7 +167,7 @@ public class MainActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putDouble(LOAN_TOTAL, currentLoanTotal);
-		outState.putInt(CUSTOM_TERM, currentCustomPercent);
+		outState.putInt(CUSTOM_TERM, currentCustomTerm);
 	} // end method onSaveInstanceState
 	@SuppressLint("DefaultLocale")
 	protected void updateStandard(){
@@ -186,20 +190,48 @@ public class MainActivity extends Activity {
 		} catch(Exception e) {
 			interestRate = 0;
 		}
-		double decimalInterest = interestRate/100;
-		principal = purchasePrice - downPayment;
-		long month10Text = Math.round(principal*(decimalInterest/12)/(1-Math.pow(1/(1+(decimalInterest/12)),10*12)));
-		monthPay10EditText.setText(String.valueOf(month10Text));
-		long month15Text = Math.round(principal*(decimalInterest/12)/(1-Math.pow(1/(1+(decimalInterest/12)),15*12)));
-		monthPay15EditText.setText(String.valueOf(month15Text));
-		long month20Text = Math.round(principal*(decimalInterest/12)/(1-Math.pow(1/(1+(decimalInterest/12)),20*12)));
-		monthPay20EditText.setText(String.valueOf(month20Text));
-				//where term is the number of years
+		if(purchasePrice != 0 && downPayment != 0 && interestRate != 0){
+			double decimalInterest = interestRate/100;
+			principal = purchasePrice - downPayment;
+			long month10Text = Math.round(principal*(decimalInterest/12)/(1-Math.pow(1/(1+(decimalInterest/12)),10*12)));
+			monthPay10EditText.setText(String.valueOf(month10Text));
+			long month15Text = Math.round(principal*(decimalInterest/12)/(1-Math.pow(1/(1+(decimalInterest/12)),15*12)));
+			monthPay15EditText.setText(String.valueOf(month15Text));
+			long month20Text = Math.round(principal*(decimalInterest/12)/(1-Math.pow(1/(1+(decimalInterest/12)),20*12)));
+			monthPay20EditText.setText(String.valueOf(month20Text));
+			total10EditText.setText(String.valueOf(month10Text*12*10+downPayment));
+			total15EditText.setText(String.valueOf(month10Text*12*15+downPayment));
+			total20EditText.setText(String.valueOf(month10Text*12*20+downPayment));
+		}
 	}
 	protected void updateCustom(){
-
-		
-		
+		int principal = 0;
+		int purchasePrice;
+		try{
+			purchasePrice = Integer.parseInt(purchasePriceEditText.getText().toString());
+		} catch(Exception e) {
+			purchasePrice = 0;
+		}
+		int downPayment;
+		try{
+			downPayment = Integer.parseInt(downPaymentEditText.getText().toString());
+		} catch(Exception e) {
+			downPayment = 0;
+		}
+		double interestRate;
+		try{
+			interestRate = Double.parseDouble(interestRateEditText.getText().toString());
+		} catch(Exception e) {
+			interestRate = 0;
+		}
+		customTerm.setText(currentCustomTerm+" yrs");
+		if(purchasePrice != 0 && downPayment != 0 && interestRate != 0){
+			double decimalInterest = interestRate/100;
+			principal = purchasePrice - downPayment;
+			long customText = Math.round(principal*(decimalInterest/12)/(1-Math.pow(1/(1+(decimalInterest/12)),currentCustomTerm*12)));
+			customMonthPay.setText(String.valueOf(customText));
+			customTotal.setText(String.valueOf(customText*12*currentCustomTerm+downPayment));
+		}
 	}
 	
 }

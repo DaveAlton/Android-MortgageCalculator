@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TipCalculator</string>
+    <string name="app_name">Mortgage Calculator</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="billTotal">Price</string>
@@ -12,9 +12,9 @@
     <string name="tipTextView">Mon Pay</string>
     <string name="totalTextView">Total</string>
     <string name="customTextView">Custom</string>
-    <string name="customTipTextView">0yrs</string>
+    <string name="customTipTextView">18 yrs</string>
     <string name="tipCustomTextView">Mon Pay</string>
-    <string name="totalCustomTextView">Loan</string>
+    <string name="totalCustomTextView">Total</string>
     <string name="billTextView">Price</string>
     <string name="downPaymentTextView">Down Payment</string>
     <string name="interestRateTextView">Rate</string>
