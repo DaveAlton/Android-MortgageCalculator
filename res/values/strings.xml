@@ -9,17 +9,17 @@
     <string name="fifteenTextView">15yrs</string>
     <string name="twentyTextView">20yrs</string>
     <string name="blank"/>
-    <string name="tipTextView">Min Mon Payment</string>
+    <string name="tipTextView">Mon Pay</string>
     <string name="totalTextView">Total</string>
     <string name="customTextView">Custom</string>
     <string name="customTipTextView">0yrs</string>
-    <string name="tipCustomTextView">Min Mon Payment</string>
+    <string name="tipCustomTextView">Mon Pay</string>
     <string name="totalCustomTextView">Loan</string>
     <string name="billTextView">Price</string>
     <string name="downPaymentTextView">Down Payment</string>
     <string name="interestRateTextView">Rate</string>
-    <string name="purchasePrice">0</string>
-    <string name="interestRate">0</string>
-    <string name="downPayment">0</string>
+    <string name="purchasePrice"></string>
+    <string name="interestRate"></string>
+    <string name="downPayment"></string>
 
 </resources>

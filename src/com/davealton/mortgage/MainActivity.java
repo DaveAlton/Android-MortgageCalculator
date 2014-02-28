@@ -3,6 +3,7 @@ package com.davealton.mortgage;
 import com.davealton.tipcalculator.R;
 
 import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -164,16 +165,36 @@ public class MainActivity extends Activity {
 		outState.putDouble(LOAN_TOTAL, currentLoanTotal);
 		outState.putInt(CUSTOM_TERM, currentCustomPercent);
 	} // end method onSaveInstanceState
+	@SuppressLint("DefaultLocale")
 	protected void updateStandard(){
 		int principal = 0;
-		int purchasePrice = Integer.parseInt(purchasePriceEditText.getText().toString());
-		int downPayment = Integer.parseInt(downPaymentEditText.getText().toString());
-		int interestRate = Integer.parseInt(interestRateEditText.getText().toString());
+		int purchasePrice;
+		try{
+			purchasePrice = Integer.parseInt(purchasePriceEditText.getText().toString());
+		} catch(Exception e) {
+			purchasePrice = 0;
+		}
+		int downPayment;
+		try{
+			downPayment = Integer.parseInt(downPaymentEditText.getText().toString());
+		} catch(Exception e) {
+			downPayment = 0;
+		}
+		double interestRate;
+		try{
+			interestRate = Double.parseDouble(interestRateEditText.getText().toString());
+		} catch(Exception e) {
+			interestRate = 0;
+		}
+		double decimalInterest = interestRate/100;
 		principal = purchasePrice - downPayment;
-		monthPay10EditText.setText(Double.toString(principal*(interestRate/100)/(1-Math.pow(1/(1+interestRate),10))));
+		long month10Text = Math.round(principal*(decimalInterest/12)/(1-Math.pow(1/(1+(decimalInterest/12)),10*12)));
+		monthPay10EditText.setText(String.valueOf(month10Text));
+		long month15Text = Math.round(principal*(decimalInterest/12)/(1-Math.pow(1/(1+(decimalInterest/12)),15*12)));
+		monthPay15EditText.setText(String.valueOf(month15Text));
+		long month20Text = Math.round(principal*(decimalInterest/12)/(1-Math.pow(1/(1+(decimalInterest/12)),20*12)));
+		monthPay20EditText.setText(String.valueOf(month20Text));
 				//where term is the number of years
-		
-		
 	}
 	protected void updateCustom(){
 
