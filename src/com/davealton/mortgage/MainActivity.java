@@ -5,15 +5,12 @@ import com.davealton.tipcalculator.R;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import android.app.Activity;
-import android.view.Menu;
 
 @SuppressLint("CutPasteId")
 public class MainActivity extends Activity {
@@ -30,8 +27,6 @@ public class MainActivity extends Activity {
 	private EditText monthPay20EditText; // displays 20% monthPay
 	private EditText total20EditText; // displays total with 20% monthPay
 	private TextView customTerm; // displays custom monthPay percentage
-	private EditText monthPayCustomEditText; // displays custom monthPay amount
-	private EditText totalCustomEditText; // displays total with custom monthPay
 	private SeekBar customSeekBar; // used to generate custom monthPay percentage
 	private EditText downPaymentEditText;
 	private EditText customTotal;
@@ -67,9 +62,6 @@ public class MainActivity extends Activity {
 		customMonthPay = (EditText) findViewById(R.id.tipCustomEditText);
 		customTerm = (TextView) findViewById(R.id.customTipTextView);
 		customTotal = (EditText) findViewById(R.id.totalCustomEditText);
-		// get the custom monthPay and total EditTexts
-		monthPayCustomEditText = (EditText) findViewById(R.id.tipCustomEditText);
-		totalCustomEditText = (EditText) findViewById(R.id.totalCustomEditText);
 		// get the LoanEditText
 		purchasePriceEditText = (EditText) findViewById(R.id.billEditText);
 		
